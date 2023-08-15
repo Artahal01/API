@@ -1,0 +1,57 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Onboarding"
+paths:
+  /students:
+    post:
+      summary: "Créer un nouvel étudiant"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentInput"
+      responses:
+        '201':
+          description: "Étudiant créé avec succès"
+        '500':
+          description: "Données invalides"
+  
+  /students/{studentId}:
+    get:
+      summary: "Obtenir les informations d'un étudiant"
+      parameters:
+        - name: studentId
+          in: path
+          description: "ID de l'étudiant à obtenir"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "Informations récupérer avec succès"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentOutput"
+        '404':
+          description: "Étudiant non trouvé"
+
+components:
+  schemas:
+    StudentInput:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+  
+    StudentOutput:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
