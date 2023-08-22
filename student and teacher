@@ -1,0 +1,143 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Onboarding"
+paths:
+  /students:
+    post:
+      summary: "Créer un nouvel étudiant"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentInput"
+      responses:
+        '201':
+          description: "Étudiant créé avec succès"
+        '500':
+          description: "Données invalides"
+  
+  /students/{studentId}:
+    get:
+      summary: "Obtenir les informations d'un étudiant"
+      parameters:
+        - name: studentId
+          in: path
+          description: "ID de l'étudiant à obtenir"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "Informations récupérées avec succès"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentOutput"
+        '404':
+          description: "Étudiant non trouvé"
+    put:
+      summary: "Mettre à jour les informations d'un étudiant"
+      parameters:
+        - name: studentId
+          in: path
+          description: "ID de l'étudiant à mettre à jour"
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentInput"
+      responses:
+        '200':
+          description: "Étudiant mis à jour avec succès"
+        '404':
+          description: "Étudiant non trouvé"
+  
+    delete:
+      summary: "Supprimer un étudiant"
+      parameters:
+        - name: studentId
+          in: path
+          description: "ID de l'étudiant à supprimer"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: "Étudiant supprimé avec succès"
+        '404':
+          description: "Étudiant non trouvé"
+
+  /teachers:
+    post:
+      summary: "Créer un nouvel enseignant"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeacherInput"
+      responses:
+        '201':
+          description: "Enseignant créé avec succès"
+        '500':
+          description: "Données invalides"
+  
+  /teachers/{teacherId}:
+    get:
+      summary: "Obtenir les informations d'un enseignant"
+      parameters:
+        - name: teacherId
+          in: path
+          description: "ID de l'enseignant à obtenir"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "Informations récupérées avec succès"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeacherOutput"
+        '404':
+          description: "Enseignant non trouvé"
+
+components:
+  schemas:
+    StudentInput:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+  
+    StudentOutput:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
+
+    TeacherInput:
+      type: object
+      properties:
+        name:
+          type: string
+        subject:
+          type: string
+  
+    TeacherOutput:
+      type: object
+      properties:
+        name:
+          type: string
+        subject:
+          type: string
